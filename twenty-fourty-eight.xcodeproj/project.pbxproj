@@ -16,6 +16,13 @@
 		2D3228E2287E209400C4DD7E /* twenty_fourty_eightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3228E1287E209400C4DD7E /* twenty_fourty_eightTests.swift */; };
 		2D3228EC287E209400C4DD7E /* twenty_fourty_eightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3228EB287E209400C4DD7E /* twenty_fourty_eightUITests.swift */; };
 		2D3228EE287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3228ED287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift */; };
+		2D3228FC287F13BA00C4DD7E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2D3228FB287F13BA00C4DD7E /* ComposableArchitecture */; };
+		2DE307B6287F1A5400BEB06B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B5287F1A5400BEB06B /* Color.swift */; };
+		2DE307B9287F1F3600BEB06B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B8287F1F3600BEB06B /* BoardView.swift */; };
+		2DE307BB287F21D800BEB06B /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307BA287F21D800BEB06B /* TileView.swift */; };
+		2DE307BE287F2A2700BEB06B /* BoardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307BD287F2A2700BEB06B /* BoardState.swift */; };
+		2DE307C1287F2C8900BEB06B /* BoardActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307C0287F2C8900BEB06B /* BoardActions.swift */; };
+		2DE307C4287F2E1E00BEB06B /* BoardReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307C3287F2E1E00BEB06B /* BoardReducer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +55,12 @@
 		2D3228E7287E209400C4DD7E /* twenty-fourty-eightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "twenty-fourty-eightUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D3228EB287E209400C4DD7E /* twenty_fourty_eightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twenty_fourty_eightUITests.swift; sourceTree = "<group>"; };
 		2D3228ED287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twenty_fourty_eightUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2DE307B5287F1A5400BEB06B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		2DE307B8287F1F3600BEB06B /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		2DE307BA287F21D800BEB06B /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		2DE307BD287F2A2700BEB06B /* BoardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardState.swift; sourceTree = "<group>"; };
+		2DE307C0287F2C8900BEB06B /* BoardActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardActions.swift; sourceTree = "<group>"; };
+		2DE307C3287F2E1E00BEB06B /* BoardReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3228FC287F13BA00C4DD7E /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,12 +112,17 @@
 		2D3228CA287E209000C4DD7E /* twenty-fourty-eight */ = {
 			isa = PBXGroup;
 			children = (
-				2D3228CB287E209000C4DD7E /* twenty_fourty_eightApp.swift */,
-				2D3228CD287E209000C4DD7E /* ContentView.swift */,
+				2DE307BF287F2C6F00BEB06B /* Actions */,
 				2D3228CF287E209400C4DD7E /* Assets.xcassets */,
+				2D3228CD287E209000C4DD7E /* ContentView.swift */,
+				2DE307B4287F1A4300BEB06B /* Extensions */,
 				2D3228D4287E209400C4DD7E /* Persistence.swift */,
-				2D3228D6287E209400C4DD7E /* twenty_fourty_eight.xcdatamodeld */,
 				2D3228D1287E209400C4DD7E /* Preview Content */,
+				2DE307C2287F2E1100BEB06B /* Reducers */,
+				2DE307BC287F2A1600BEB06B /* State */,
+				2D3228D6287E209400C4DD7E /* twenty_fourty_eight.xcdatamodeld */,
+				2D3228CB287E209000C4DD7E /* twenty_fourty_eightApp.swift */,
+				2DE307B7287F1F1D00BEB06B /* Views */,
 			);
 			path = "twenty-fourty-eight";
 			sourceTree = "<group>";
@@ -133,6 +152,47 @@
 			path = "twenty-fourty-eightUITests";
 			sourceTree = "<group>";
 		};
+		2DE307B4287F1A4300BEB06B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2DE307B5287F1A5400BEB06B /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2DE307B7287F1F1D00BEB06B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2DE307B8287F1F3600BEB06B /* BoardView.swift */,
+				2DE307BA287F21D800BEB06B /* TileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2DE307BC287F2A1600BEB06B /* State */ = {
+			isa = PBXGroup;
+			children = (
+				2DE307BD287F2A2700BEB06B /* BoardState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		2DE307BF287F2C6F00BEB06B /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				2DE307C0287F2C8900BEB06B /* BoardActions.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		2DE307C2287F2E1100BEB06B /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				2DE307C3287F2E1E00BEB06B /* BoardReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,6 +209,9 @@
 			dependencies = (
 			);
 			name = "twenty-fourty-eight";
+			packageProductDependencies = (
+				2D3228FB287F13BA00C4DD7E /* ComposableArchitecture */,
+			);
 			productName = "twenty-fourty-eight";
 			productReference = 2D3228C8287E209000C4DD7E /* twenty-fourty-eight.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +284,9 @@
 				Base,
 			);
 			mainGroup = 2D3228BF287E209000C4DD7E;
+			packageReferences = (
+				2D3228FA287F13BA00C4DD7E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 2D3228C9287E209000C4DD7E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -264,8 +330,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D3228D5287E209400C4DD7E /* Persistence.swift in Sources */,
+				2DE307C4287F2E1E00BEB06B /* BoardReducer.swift in Sources */,
+				2DE307C1287F2C8900BEB06B /* BoardActions.swift in Sources */,
+				2DE307BB287F21D800BEB06B /* TileView.swift in Sources */,
 				2D3228CE287E209000C4DD7E /* ContentView.swift in Sources */,
 				2D3228D8287E209400C4DD7E /* twenty_fourty_eight.xcdatamodeld in Sources */,
+				2DE307BE287F2A2700BEB06B /* BoardState.swift in Sources */,
+				2DE307B9287F1F3600BEB06B /* BoardView.swift in Sources */,
+				2DE307B6287F1A5400BEB06B /* Color.swift in Sources */,
 				2D3228CC287E209000C4DD7E /* twenty_fourty_eightApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,6 +663,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2D3228FA287F13BA00C4DD7E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2D3228FB287F13BA00C4DD7E /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2D3228FA287F13BA00C4DD7E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2D3228D6287E209400C4DD7E /* twenty_fourty_eight.xcdatamodeld */ = {
