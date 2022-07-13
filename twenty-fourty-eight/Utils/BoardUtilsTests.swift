@@ -130,7 +130,7 @@ class BoardUtilsTests: XCTestCase {
             [0, 0, 0, 0],
             [16, 32, 64, 128]
         ]
-        XCTAssertEqual(BoardUtils.swipe(initialBoard), expectedBoard)
+        XCTAssertEqual(BoardUtils.swipe(initialBoard, to: .right), expectedBoard)
     }
 
 }

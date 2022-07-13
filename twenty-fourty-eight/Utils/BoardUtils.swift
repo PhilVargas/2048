@@ -6,6 +6,24 @@
 //
 
 class BoardUtils {
+
+    static func randomEmptyTile(_ matrix: BoardMatrix) -> TileCoordinate? {
+        zeroCoordinates(matrix).randomElement()
+    }
+
+    private static func zeroCoordinates(_ matrix: BoardMatrix) ->  [TileCoordinate] {
+        var coordinates: [(TileCoordinate)] = []
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                if matrix[i][j] == 0 {
+                    coordinates.append((i, j))
+                }
+            }
+        }
+
+        return coordinates
+    }
+
     static func slide(_ row: BoardRow) -> BoardRow {
         let nonzeroRow = row.filter { value in value > 0 }
         let zeroPad = Array(repeating: 0, count: 4 - nonzeroRow.count)
@@ -59,10 +77,23 @@ class BoardUtils {
         return newBoard
     }
 
-    static func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
-        matrix.map(slide)
+    private static func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
+       matrix.map(slide)
             .map { row in merge(row) }
             .map(slide)
+    }
+
+    static func swipe(_ matrix: BoardMatrix, to direction: SwipeDirection) -> BoardMatrix {
+        switch direction {
+        case .right:
+           return swipe(matrix)
+        case .up:
+            return rotate(rotate(rotate(swipe(rotate(matrix)))))
+        case .left:
+            return rotate(rotate(swipe(rotate(rotate(matrix)))))
+        case .down:
+            return rotate(swipe(rotate(rotate(rotate(matrix)))))
+        }
     }
 }
 

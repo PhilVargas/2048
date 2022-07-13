@@ -9,9 +9,10 @@ import Foundation
 
 typealias BoardRow = [Int]
 typealias BoardMatrix = [BoardRow]
+typealias TileCoordinate = (row: Int, column: Int)
 
 struct BoardState: Equatable {
-    let matrix: BoardMatrix
+    var matrix: BoardMatrix
 
     init(matrix: BoardMatrix = BoardState.emptyBoardMatrix()) {
         self.matrix = matrix

@@ -6,7 +6,8 @@
 //
 
 enum BoardAction {
-    case swipeRight
+    case swipe(SwipeDirection)
+    case addNewTile
 }
 
 enum SwipeDirection {

@@ -16,7 +16,12 @@ struct ContentView: View {
     //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
     //        animation: .default)
     //    private var items: FetchedResults<Item>
-    let store = Store(initialState: BoardState(), reducer: boardReducer, environment: .init())
+    let store = Store(initialState: BoardState(matrix: [
+        [0, 0, 2, 2],
+        [4, 0, 4, 128],
+        [0, 0, 0, 0],
+        [4, 16, 8, 128]
+    ]), reducer: boardReducer, environment: .init())
 
     var body: some View {
         NavigationView {

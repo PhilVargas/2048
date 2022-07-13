@@ -30,13 +30,15 @@ struct BoardView: View {
                 DragGesture(minimumDistance: 24, coordinateSpace: .local).onEnded { value in
                     let hDelta = value.translation.width
                     let vDelta = value.translation.height
+                    let direction: SwipeDirection
 
                     if abs(hDelta) > abs(vDelta) {
-                        viewStore.send(.swipeRight)
-//                        direction = hDelta < 0 ? .left : .right
+                        direction = hDelta < 0 ? .left : .right
                     } else {
-//                        direction = vDelta < 0 ? .up : .down
+                        direction = vDelta < 0 ? .up : .down
                     }
+
+                    viewStore.send(.swipe(direction))
                 }
             )
         }
