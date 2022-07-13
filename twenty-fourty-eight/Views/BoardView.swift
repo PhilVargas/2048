@@ -26,6 +26,19 @@ struct BoardView: View {
             .padding(8)
             .background(Color.boardBackground)
             .cornerRadius(4)
+            .gesture(
+                DragGesture(minimumDistance: 24, coordinateSpace: .local).onEnded { value in
+                    let hDelta = value.translation.width
+                    let vDelta = value.translation.height
+
+                    if abs(hDelta) > abs(vDelta) {
+                        viewStore.send(.swipeRight)
+//                        direction = hDelta < 0 ? .left : .right
+                    } else {
+//                        direction = vDelta < 0 ? .up : .down
+                    }
+                }
+            )
         }
     }
 
