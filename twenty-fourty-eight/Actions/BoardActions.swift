@@ -8,3 +8,7 @@
 enum BoardAction {
     case swipeRight
 }
+
+enum SwipeDirection {
+    case right, down, left, up
+}

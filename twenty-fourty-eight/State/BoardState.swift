@@ -7,7 +7,8 @@
 
 import Foundation
 
-typealias BoardMatrix = [[Int]]
+typealias BoardRow = [Int]
+typealias BoardMatrix = [BoardRow]
 
 struct BoardState: Equatable {
     let matrix: BoardMatrix
