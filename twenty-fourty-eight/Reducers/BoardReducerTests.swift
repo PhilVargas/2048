@@ -27,7 +27,9 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 8, 128],
             ]
         }
-        store.receive(.addNewTile)
+        store.receive(.addNewTile) {
+            $0.newestTile = (1, 1)
+        }
         store.send(.swipe(.down)) {
             $0.matrix = [
                 [0, 0, 0, 0],
@@ -66,7 +68,9 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 8, 128],
             ]
         }
-        store.receive(.addNewTile)
+        store.receive(.addNewTile) {
+            $0.newestTile = self.store.environment.randomEmptyTile($0.matrix)
+        }
         store.send(.swipe(.right))
 
         // by sending the action again, we confirm there was no effect emitting from the previous action

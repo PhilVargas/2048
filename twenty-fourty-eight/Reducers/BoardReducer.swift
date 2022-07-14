@@ -10,11 +10,18 @@ import ComposableArchitecture
 
 struct BoardEnvironment {
     var generateNewTileValue: () -> Int
+    var randomEmptyTile: (_ matrix: BoardMatrix) -> TileCoordinate?
 }
 
 extension BoardEnvironment {
-    static let live = BoardEnvironment(generateNewTileValue: BoardUtils.generateNewTileValue)
-    static let mock = BoardEnvironment(generateNewTileValue: { 0 })
+    static let live = BoardEnvironment(
+        generateNewTileValue: BoardUtils.generateNewTileValue,
+        randomEmptyTile: BoardUtils.randomEmptyTile
+    )
+    static let mock = BoardEnvironment(
+        generateNewTileValue: { 0 },
+        randomEmptyTile: { _ in (1, 1) }
+    )
 }
 
 let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, action, env in
@@ -28,7 +35,7 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
         return Just(.addNewTile).eraseToEffect()
 
     case .addNewTile:
-        if let emptyTileCoordinate = BoardUtils.randomEmptyTile(state.matrix) {
+        if let emptyTileCoordinate = env.randomEmptyTile(state.matrix) {
             state.matrix[emptyTileCoordinate.row][emptyTileCoordinate.column] = env.generateNewTileValue()
             state.newestTile = emptyTileCoordinate
         }
