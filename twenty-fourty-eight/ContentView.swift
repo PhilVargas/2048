@@ -21,7 +21,7 @@ struct ContentView: View {
         [4, 0, 4, 128],
         [0, 0, 0, 0],
         [4, 16, 8, 128]
-    ]), reducer: boardReducer, environment: .init())
+    ]), reducer: boardReducer, environment: .live)
 
     var body: some View {
         NavigationView {

@@ -20,7 +20,7 @@ struct BoardView: View {
                             TileView(viewStore.matrix[row][column])
                         }
                     }
-                    .padding(4)
+                    .padding(0)
                 }
             }
             .padding(8)
@@ -55,7 +55,7 @@ struct BoardView_Previews: PreviewProvider {
             [256, 512, 1024, 2048],
             [5096, 0, 0, 0]
         ]
-        let store = Store(initialState: BoardState(matrix: board), reducer: boardReducer, environment: .init())
+        let store = Store(initialState: BoardState(matrix: board), reducer: boardReducer, environment: .live)
         BoardView(store: store)
     }
 }

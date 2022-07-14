@@ -9,19 +9,28 @@ import ComposableArchitecture
 import Combine
 
 struct BoardEnvironment {
-    public init() {}
+    var generateNewTileValue: () -> Int
 }
 
-let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, action, _ in
+extension BoardEnvironment {
+    static let live = BoardEnvironment(generateNewTileValue: BoardUtils.generateNewTileValue)
+    static let mock = BoardEnvironment(generateNewTileValue: { 0 })
+}
+
+let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, action, env in
     switch action {
     case .swipe(let direction):
+        let initialMatrix = state.matrix
         state.matrix = BoardUtils.swipe(state.matrix, to: direction)
-//        return Just(.addNewTile).eraseToEffect()
+        if state.matrix == initialMatrix {
+            return .none
+        }
+        return Just(.addNewTile).eraseToEffect()
 
     case .addNewTile:
-//        if let emptyTileCoordinate = BoardUtils.randomEmptyTile(state.matrix) {
-//            state.matrix[emptyTileCoordinate.row][emptyTileCoordinate.column] = 2
-//        }
+        if let emptyTileCoordinate = BoardUtils.randomEmptyTile(state.matrix) {
+            state.matrix[emptyTileCoordinate.row][emptyTileCoordinate.column] = env.generateNewTileValue()
+        }
     }
 
 

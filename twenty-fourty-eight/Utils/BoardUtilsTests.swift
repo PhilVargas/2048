@@ -82,7 +82,7 @@ class BoardUtilsTests: XCTestCase {
             [15, 11, 7, 3],
             [16, 12, 8, 4]
         ]
-        XCTAssertEqual(BoardUtils.rotate(initialBoard), expectedBoard)
+        XCTAssertEqual(BoardUtils.rotateClockwise(initialBoard), expectedBoard)
     }
 
     func testRotate180() {
@@ -98,7 +98,7 @@ class BoardUtilsTests: XCTestCase {
             [8, 7, 6, 5],
             [4, 3, 2, 1]
         ]
-        XCTAssertEqual(BoardUtils.rotate(BoardUtils.rotate(initialBoard)), expectedBoard)
+        XCTAssertEqual(BoardUtils.rotateClockwise(BoardUtils.rotateClockwise(initialBoard)), expectedBoard)
     }
 
     func testRotate270() {
@@ -114,7 +114,7 @@ class BoardUtilsTests: XCTestCase {
             [2, 6, 10, 14],
             [1, 5, 9, 13]
         ]
-        XCTAssertEqual(BoardUtils.rotate(BoardUtils.rotate(BoardUtils.rotate(initialBoard))), expectedBoard)
+        XCTAssertEqual(BoardUtils.rotateClockwise(BoardUtils.rotateClockwise(BoardUtils.rotateClockwise(initialBoard))), expectedBoard)
     }
 
     func testSwipe() {

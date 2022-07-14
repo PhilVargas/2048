@@ -7,6 +7,10 @@
 
 class BoardUtils {
 
+    static func generateNewTileValue() -> Int {
+        (Array(repeating: 2, count: 9) + [4]).randomElement()!
+    }
+
     static func randomEmptyTile(_ matrix: BoardMatrix) -> TileCoordinate? {
         zeroCoordinates(matrix).randomElement()
     }
@@ -57,7 +61,7 @@ class BoardUtils {
     }
 
     // Rotate matrix clockwise by 90 degrees
-    static func rotate(_ matrix: BoardMatrix) -> BoardMatrix {
+    static func rotateClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
         let n = matrix.count
         var newBoard = matrix
 
@@ -77,6 +81,16 @@ class BoardUtils {
         return newBoard
     }
 
+    // Rotate matrix clockwise by 180 degrees
+    static func flip(_ matrix: BoardMatrix) -> BoardMatrix {
+        rotateClockwise(rotateClockwise(matrix))
+    }
+
+    // Rotate matrix counter clockwise 90 degrees, or clockwise by 270 degrees
+    static func rotateCounterClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
+        rotateClockwise(rotateClockwise(rotateClockwise(matrix)))
+    }
+
     private static func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
        matrix.map(slide)
             .map { row in merge(row) }
@@ -88,11 +102,11 @@ class BoardUtils {
         case .right:
            return swipe(matrix)
         case .up:
-            return rotate(rotate(rotate(swipe(rotate(matrix)))))
+            return rotateCounterClockwise(swipe(rotateClockwise(matrix)))
         case .left:
-            return rotate(rotate(swipe(rotate(rotate(matrix)))))
+            return flip(swipe(flip(matrix)))
         case .down:
-            return rotate(swipe(rotate(rotate(rotate(matrix)))))
+            return rotateClockwise(swipe(rotateCounterClockwise(matrix)))
         }
     }
 }

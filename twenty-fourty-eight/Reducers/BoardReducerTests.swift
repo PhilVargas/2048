@@ -16,10 +16,10 @@ class BoardFlowTests: XCTestCase {
         [0, 0, 0, 0],
         [4, 16, 8, 128]
     ]
-    let store = TestStore(initialState: BoardState(matrix: initialMatrix), reducer: boardReducer, environment: BoardEnvironment())
+    let store = TestStore(initialState: BoardState(matrix: initialMatrix), reducer: boardReducer, environment: .mock)
 
-    func testSwipeFlow() {
-        self.store.send(.swipeRight) {
+    func testSwipeDirectionFlow() {
+        self.store.send(.swipe(.right)) {
             $0.matrix = [
                 [0, 0, 0, 4],
                 [0, 0, 8, 128],
@@ -27,7 +27,8 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 8, 128]
             ]
         }
-        self.store.send(.swipeDown) {
+        self.store.receive(.addNewTile)
+        self.store.send(.swipe(.down)) {
             $0.matrix = [
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
@@ -35,7 +36,8 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 16, 256]
             ]
         }
-        self.store.send(.swipeLeft) {
+        self.store.receive(.addNewTile)
+        self.store.send(.swipe(.left)) {
             $0.matrix = [
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
@@ -43,7 +45,8 @@ class BoardFlowTests: XCTestCase {
                 [4, 32, 256, 0]
             ]
         }
-        self.store.send(.swipeUp) {
+        self.store.receive(.addNewTile)
+        self.store.send(.swipe(.up)) {
             $0.matrix = [
                 [8, 32, 256, 0],
                 [0, 0, 0, 0],
@@ -51,5 +54,23 @@ class BoardFlowTests: XCTestCase {
                 [0, 0, 0, 0]
             ]
         }
+        self.store.receive(.addNewTile)
+    }
+
+    func testSwipeDoesNotAddNewTileWithNoChangesFlow() {
+        self.store.send(.swipe(.right)) {
+            $0.matrix = [
+                [0, 0, 0, 4],
+                [0, 0, 8, 128],
+                [0, 0, 0, 0],
+                [4, 16, 8, 128]
+            ]
+        }
+        self.store.receive(.addNewTile)
+        self.store.send(.swipe(.right))
+
+        // by sending the action again, we confirm there was no effect emitting from the previous action
+        // TODO: is there an actual way of asserting this?
+        self.store.send(.swipe(.right))
     }
 }

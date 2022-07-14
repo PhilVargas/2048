@@ -5,7 +5,7 @@
 //  Created by Phil Vargas on 7/13/22.
 //
 
-enum BoardAction {
+enum BoardAction: Equatable {
     case swipe(SwipeDirection)
     case addNewTile
 }
