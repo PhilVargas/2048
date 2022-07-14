@@ -25,7 +25,6 @@ struct TileView: View {
             .frame(width: 70, height: 70)
             .background(style.backgroundColor)
             .cornerRadius(3)
-            .animation(.easeIn, value: 1)
     }
 }
 

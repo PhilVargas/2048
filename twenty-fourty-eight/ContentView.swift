@@ -17,10 +17,10 @@ struct ContentView: View {
     //        animation: .default)
     //    private var items: FetchedResults<Item>
     let store = Store(initialState: BoardState(matrix: [
-        [0, 0, 2, 2],
-        [4, 0, 4, 128],
         [0, 0, 0, 0],
-        [4, 16, 8, 128],
+        [0, 0, 2, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
     ]), reducer: boardReducer, environment: .live)
 
     var body: some View {

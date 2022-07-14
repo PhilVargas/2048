@@ -11,6 +11,8 @@ import SwiftUI
 struct BoardView: View {
     let store: Store<BoardState, BoardAction>
 
+    @State private var animationToggle = false
+
     var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
@@ -18,6 +20,7 @@ struct BoardView: View {
                     HStack {
                         ForEach(0 ..< viewStore.matrix[row].count, id: \.self) { column in
                             TileView(viewStore.matrix[row][column])
+                                .animation((row, column) == viewStore.newestTile ? .easeIn : .none, value: animationToggle)
                         }
                     }
                     .padding(0)
@@ -26,7 +29,7 @@ struct BoardView: View {
             .padding(8)
             .background(Color.boardBackground)
             .cornerRadius(4)
-            .gesture(
+            .gesture( // TODO: refactor into some kind of gesture helper
                 DragGesture(minimumDistance: 24, coordinateSpace: .local).onEnded { value in
                     let hDelta = value.translation.width
                     let vDelta = value.translation.height
@@ -38,6 +41,7 @@ struct BoardView: View {
                         direction = vDelta < 0 ? .up : .down
                     }
 
+                    self.animationToggle.toggle()
                     viewStore.send(.swipe(direction))
                 }
             )

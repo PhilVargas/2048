@@ -30,6 +30,7 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
     case .addNewTile:
         if let emptyTileCoordinate = BoardUtils.randomEmptyTile(state.matrix) {
             state.matrix[emptyTileCoordinate.row][emptyTileCoordinate.column] = env.generateNewTileValue()
+            state.newestTile = emptyTileCoordinate
         }
     }
 
