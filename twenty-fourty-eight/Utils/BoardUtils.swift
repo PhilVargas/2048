@@ -5,8 +5,7 @@
 //  Created by Phil Vargas on 7/13/22.
 //
 
-class BoardUtils {
-
+enum BoardUtils {
     static func generateNewTileValue() -> Int {
         (Array(repeating: 2, count: 9) + [4]).randomElement()!
     }
@@ -15,12 +14,12 @@ class BoardUtils {
         zeroCoordinates(matrix).randomElement()
     }
 
-    private static func zeroCoordinates(_ matrix: BoardMatrix) ->  [TileCoordinate] {
-        var coordinates: [(TileCoordinate)] = []
-        for i in 0..<matrix.count {
-            for j in 0..<matrix[i].count {
-                if matrix[i][j] == 0 {
-                    coordinates.append((i, j))
+    private static func zeroCoordinates(_ matrix: BoardMatrix) -> [TileCoordinate] {
+        var coordinates: [TileCoordinate] = []
+        for row in 0 ..< matrix.count {
+            for col in 0 ..< matrix[row].count {
+                if matrix[row][col] == 0 {
+                    coordinates.append((row, col))
                 }
             }
         }
@@ -45,7 +44,7 @@ class BoardUtils {
     // merged into the current tile
     //
     // We end the merge when the current index is the last element of
-    // the row, it has nothing to merge with behind it. 
+    // the row, it has nothing to merge with behind it.
     static func merge(_ row: BoardRow, index: Int = 0) -> BoardRow {
         let nextIndex = index + 1
         if nextIndex >= row.endIndex { return row }
@@ -53,7 +52,7 @@ class BoardUtils {
         var newRow: BoardRow = row.reversed()
         let first = row.reversed()[index]
         let second = row.reversed()[nextIndex]
-        if first == second && first > 0 {
+        if first == second, first > 0 {
             newRow[index] = first + second
             newRow.remove(at: nextIndex)
         }
@@ -62,19 +61,19 @@ class BoardUtils {
 
     // Rotate matrix clockwise by 90 degrees
     static func rotateClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
-        let n = matrix.count
+        let len = matrix.count
         var newBoard = matrix
 
-        for i in (0..<n/2) {
-            var j = i
-            while j < n - i - 1 {
-                let swap = newBoard[i][j]
-                newBoard[i][j] = newBoard[n - 1 - j][i]
-                newBoard[n - 1 - j][i] = newBoard[n - 1 - i][n - 1 - j]
-                newBoard[n - 1 - i][n - 1 - j] = newBoard[j][n - 1 - i]
-                newBoard[j][n - 1 - i] = swap
+        for row in 0 ..< len / 2 {
+            var col = row
+            while col < len - row - 1 {
+                let swap = newBoard[row][col]
+                newBoard[row][col] = newBoard[len - 1 - col][row]
+                newBoard[len - 1 - col][row] = newBoard[len - 1 - row][len - 1 - col]
+                newBoard[len - 1 - row][len - 1 - col] = newBoard[col][len - 1 - row]
+                newBoard[col][len - 1 - row] = swap
 
-                j += 1
+                col += 1
             }
         }
 
@@ -92,7 +91,7 @@ class BoardUtils {
     }
 
     private static func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
-       matrix.map(slide)
+        matrix.map(slide)
             .map { row in merge(row) }
             .map(slide)
     }
@@ -100,7 +99,7 @@ class BoardUtils {
     static func swipe(_ matrix: BoardMatrix, to direction: SwipeDirection) -> BoardMatrix {
         switch direction {
         case .right:
-           return swipe(matrix)
+            return swipe(matrix)
         case .up:
             return rotateCounterClockwise(swipe(rotateClockwise(matrix)))
         case .left:
@@ -110,4 +109,3 @@ class BoardUtils {
         }
     }
 }
-

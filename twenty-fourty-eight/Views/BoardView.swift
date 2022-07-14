@@ -5,8 +5,8 @@
 //  Created by Phil Vargas on 7/13/22.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct BoardView: View {
     let store: Store<BoardState, BoardAction>
@@ -14,9 +14,9 @@ struct BoardView: View {
     var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
-                ForEach(0..<viewStore.matrix.count, id: \.self) { row in
+                ForEach(0 ..< viewStore.matrix.count, id: \.self) { row in
                     HStack {
-                        ForEach(0..<viewStore.matrix[row].count, id: \.self) { column in
+                        ForEach(0 ..< viewStore.matrix[row].count, id: \.self) { column in
                             TileView(viewStore.matrix[row][column])
                         }
                     }
@@ -43,9 +43,7 @@ struct BoardView: View {
             )
         }
     }
-
 }
-
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
@@ -53,7 +51,7 @@ struct BoardView_Previews: PreviewProvider {
             [0, 2, 4, 8],
             [16, 32, 64, 128],
             [256, 512, 1024, 2048],
-            [5096, 0, 0, 0]
+            [5096, 0, 0, 0],
         ]
         let store = Store(initialState: BoardState(matrix: board), reducer: boardReducer, environment: .live)
         BoardView(store: store)

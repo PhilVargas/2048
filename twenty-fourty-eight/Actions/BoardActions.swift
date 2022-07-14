@@ -11,5 +11,8 @@ enum BoardAction: Equatable {
 }
 
 enum SwipeDirection {
-    case right, down, left, up
+    case right
+    case down
+    case left
+    case up // swiftlint:disable:this identifier_name
 }

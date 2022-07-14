@@ -14,8 +14,8 @@ struct TileView: View {
 
     init(_ value: Int) {
         self.value = value
-        self.title = value == 0 ? "" : value.description
-        self.style = .init(value)
+        title = value == 0 ? "" : value.description
+        style = .init(value)
     }
 
     var body: some View {
@@ -29,6 +29,7 @@ struct TileView: View {
     }
 }
 
+// swiftlint:disable cyclomatic_complexity
 enum TileViewStyle {
     case empty
     case two
@@ -91,6 +92,8 @@ enum TileViewStyle {
         }
     }
 }
+
+// swiftlint:enable cyclomatic_complexity
 
 struct TileView_Previews: PreviewProvider {
     static var previews: some View {

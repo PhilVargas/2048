@@ -5,9 +5,9 @@
 //  Created by Phil Vargas on 7/12/22.
 //
 
-import SwiftUI
-import CoreData
 import ComposableArchitecture
+import CoreData
+import SwiftUI
 
 struct ContentView: View {
     //    @Environment(\.managedObjectContext) private var viewContext
@@ -20,7 +20,7 @@ struct ContentView: View {
         [0, 0, 2, 2],
         [4, 0, 4, 128],
         [0, 0, 0, 0],
-        [4, 16, 8, 128]
+        [4, 16, 8, 128],
     ]), reducer: boardReducer, environment: .live)
 
     var body: some View {
@@ -44,5 +44,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
-
-
