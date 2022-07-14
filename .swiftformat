@@ -1,0 +1,6 @@
+--enable isEmpty
+--disable wrapmultilinestatementbraces
+--commas always
+--wrapparameters before-first
+--wraparguments before-first
+--wrapcollections before-first

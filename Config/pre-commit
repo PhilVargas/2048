@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Runs SwiftFormat on changed Swift files in the project.
+# The re-formatting may not be caught at commit time, though, and so may require a subsequent commit/amending.
+
+# If any command fails, exit immediately with that command's exit status.
+# shellcheck disable=SC3040
+set -eo pipefail
+
+# Redirect output to stderr.
+exec 1>&2
+
+# Add Homebrew (Rosetta/Intel and Apple Silicon paths) and Mint to the PATH for git GUIs to find SwiftFormat.
+export PATH="/usr/local/bin/:/opt/homebrew/:~/.mint/bin/:$PATH"
+
+# Find all changed files for this commit.
+CHANGED_FILES=$(git diff --name-only --cached --diff-filter=ACMR)
+# Get only changed files that match the given file suffix pattern.
+get_pattern_files() {
+    pattern=$(echo "$*" | sed "s/ /\$\\\|/g")
+    echo "$CHANGED_FILES" | { grep "$pattern$" || true; }
+}
+
+# Get all changed Swift files.
+CHANGED_SWIFT_FILES=$(get_pattern_files .swift)
+
+# Base for relative pathing.
+hooks_dir=$(dirname "$0")
+
+# shellcheck disable=SC3010
+if [[ -n "$CHANGED_SWIFT_FILES" ]]
+then
+	cd "$hooks_dir/../../"
+	swiftformat . --quiet
+fi

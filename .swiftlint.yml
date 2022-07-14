@@ -1,0 +1,6 @@
+disabled_rules:
+  - line_length
+  - file_length
+  - function_body_length
+trailing_comma:
+  mandatory_comma: true
