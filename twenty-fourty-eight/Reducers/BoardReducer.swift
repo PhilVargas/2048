@@ -39,7 +39,10 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
             state.matrix[emptyTileCoordinate.row][emptyTileCoordinate.column] = env.generateNewTileValue()
             state.newestTile = emptyTileCoordinate
         }
-    }
 
-    return .none
+        return Just(.checkGameOver).eraseToEffect()
+
+    case .checkGameOver:
+        return .none
+    }
 }

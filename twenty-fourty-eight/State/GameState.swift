@@ -10,11 +10,13 @@ import ComposableArchitecture
 struct GameState: Equatable {
     var board: BoardState
     var score: Int
-    var alert: AlertState<GameAction>?
+    var newGameAlert: AlertState<GameAction>?
+    var gameOverAlert: AlertState<GameAction>?
 
-    init(board: BoardState = BoardState(), score: Int = 0, alert: AlertState<GameAction>? = nil) {
+    init(board: BoardState = BoardState(), score: Int = 0, gameOverAlert: AlertState<GameAction>? = nil, newGameAlert: AlertState<GameAction>? = nil) {
         self.board = board
         self.score = score
-        self.alert = alert
+        self.gameOverAlert = gameOverAlert
+        self.newGameAlert = newGameAlert
     }
 }

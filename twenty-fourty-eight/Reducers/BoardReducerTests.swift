@@ -10,15 +10,22 @@ import ComposableArchitecture
 import XCTest
 
 class BoardFlowTests: XCTestCase {
-    static let initialMatrix: BoardMatrix = [
+    let initialMatrix: BoardMatrix = [
         [0, 0, 2, 2],
         [4, 0, 4, 128],
         [0, 0, 0, 0],
         [4, 16, 8, 128],
     ]
-    let store = TestStore(initialState: BoardState(matrix: initialMatrix), reducer: boardReducer, environment: .mock)
+
+    let gameOverMatrix: BoardMatrix = [
+        [4, 0, 2, 4],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+    ]
 
     func testSwipeDirectionFlow() {
+        let store = TestStore(initialState: BoardState(matrix: initialMatrix), reducer: boardReducer, environment: .mock)
         store.send(.swipe(.right)) {
             $0.matrix = [
                 [0, 0, 0, 4],
@@ -30,6 +37,7 @@ class BoardFlowTests: XCTestCase {
         store.receive(.addNewTile) {
             $0.newestTile = (1, 1)
         }
+        store.receive(.checkGameOver)
         store.send(.swipe(.down)) {
             $0.matrix = [
                 [0, 0, 0, 0],
@@ -39,6 +47,7 @@ class BoardFlowTests: XCTestCase {
             ]
         }
         store.receive(.addNewTile)
+        store.receive(.checkGameOver)
         store.send(.swipe(.left)) {
             $0.matrix = [
                 [0, 0, 0, 0],
@@ -48,6 +57,7 @@ class BoardFlowTests: XCTestCase {
             ]
         }
         store.receive(.addNewTile)
+        store.receive(.checkGameOver)
         store.send(.swipe(.up)) {
             $0.matrix = [
                 [8, 32, 256, 0],
@@ -57,9 +67,11 @@ class BoardFlowTests: XCTestCase {
             ]
         }
         store.receive(.addNewTile)
+        store.receive(.checkGameOver)
     }
 
     func testSwipeDoesNotAddNewTileWithNoChangesFlow() {
+        let store = TestStore(initialState: BoardState(matrix: initialMatrix), reducer: boardReducer, environment: .mock)
         store.send(.swipe(.right)) {
             $0.matrix = [
                 [0, 0, 0, 4],
@@ -69,12 +81,37 @@ class BoardFlowTests: XCTestCase {
             ]
         }
         store.receive(.addNewTile) {
-            $0.newestTile = self.store.environment.randomEmptyTile($0.matrix)
+            $0.newestTile = store.environment.randomEmptyTile($0.matrix)
         }
+        store.receive(.checkGameOver)
         store.send(.swipe(.right))
 
         // by sending the action again, we confirm there was no effect emitting from the previous action
         // TODO: is there an actual way of asserting this?
         store.send(.swipe(.right))
+    }
+
+    func testSwipeGameOverWhenNoNewTileIsAdded() {
+        let store = TestStore(initialState: BoardState(matrix: gameOverMatrix), reducer: boardReducer, environment: .live)
+        store.environment.generateNewTileValue = { 2 }
+
+        store.send(.swipe(.right)) {
+            $0.matrix = [
+                [0, 4, 2, 4],
+                [4, 2, 4, 2],
+                [2, 4, 2, 4],
+                [4, 2, 4, 2],
+            ]
+        }
+        store.receive(.addNewTile) {
+            $0.matrix = [
+                [2, 4, 2, 4],
+                [4, 2, 4, 2],
+                [2, 4, 2, 4],
+                [4, 2, 4, 2],
+            ]
+            $0.newestTile = (0, 0)
+        }
+        store.receive(.checkGameOver)
     }
 }
