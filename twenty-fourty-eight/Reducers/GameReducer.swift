@@ -21,23 +21,24 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
     boardReducer.pullback(state: \.board, action: /GameAction.board, environment: \.board),
     .init { state, action, _ in
         switch action {
+        case .board(.checkGameOver):
+            if GameUtils.isGameOver(state.board.matrix) {
+                state.alert = state.gameOverAlert()
+            }
+            return .none
         case .board:
             return .none
         case .menuButtonTapped:
             return .none
         case .newGameTapped:
-            state.alert = AlertState(
-                title: .init("Are you sure you want to start a new game?"),
-                primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)),
-                secondaryButton: .cancel(.init("Cancel"))
-            )
+            state.alert = state.newGameAlert()
 
             return .none
-        case .newGameAlertCancelTapped:
+        case .alertDismissTapped:
             state.alert = nil
 
             return .none
-        case .newGameAlertConfirmTapped:
+        case .newGameAlertConfirmTapped, .gameOverAlertDismissTapped:
             state = GameState()
             return Just(GameAction.board(.addNewTile)).eraseToEffect()
         }

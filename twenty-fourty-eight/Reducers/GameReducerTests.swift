@@ -10,22 +10,30 @@ import ComposableArchitecture
 import XCTest
 
 class GameFlowTests: XCTestCase {
-    static let initialMatrix: BoardMatrix = [
+    let initialMatrix: BoardMatrix = [
         [0, 0, 2, 2],
         [4, 0, 4, 128],
         [0, 0, 0, 0],
         [4, 16, 8, 128],
     ]
-    let store = TestStore(initialState: GameState(board: BoardState(matrix: initialMatrix)), reducer: gameReducer, environment: .mock)
+    let gameOverMatrix = [
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+    ]
+
     func testNewGameFlow() {
+        let store = TestStore(initialState: GameState(board: BoardState(matrix: initialMatrix)), reducer: gameReducer, environment: .mock)
+
         store.send(.newGameTapped) {
-            $0.alert = AlertState(title: .init("Are you sure you want to start a new game?"), primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)), secondaryButton: .cancel(.init("Cancel")))
+            $0.alert = store.state.newGameAlert()
         }
-        store.send(.newGameAlertCancelTapped) {
+        store.send(.alertDismissTapped) {
             $0.alert = nil
         }
         store.send(.newGameTapped) {
-            $0.alert = AlertState(title: .init("Are you sure you want to start a new game?"), primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)), secondaryButton: .cancel(.init("Cancel")))
+            $0.alert = store.state.newGameAlert()
         }
         store.send(.newGameAlertConfirmTapped) {
             $0.alert = nil
@@ -34,5 +42,22 @@ class GameFlowTests: XCTestCase {
         store.receive(.board(.addNewTile)) {
             $0.board.newestTile = (1, 1)
         }
+        store.receive(.board(.checkGameOver))
+    }
+
+    func testCheckGameOverFlow() {
+        let store = TestStore(initialState: GameState(board: BoardState(matrix: gameOverMatrix)), reducer: gameReducer, environment: .mock)
+
+        store.send(.board(.checkGameOver)) {
+            $0.alert = store.state.gameOverAlert()
+        }
+        store.send(.gameOverAlertDismissTapped) {
+            $0.alert = nil
+            $0 = GameState()
+        }
+        store.receive(.board(.addNewTile)) {
+            $0.board.newestTile = (1, 1)
+        }
+        store.receive(.board(.checkGameOver))
     }
 }

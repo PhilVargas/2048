@@ -18,3 +18,21 @@ struct GameState: Equatable {
         self.alert = alert
     }
 }
+
+extension GameState {
+    func gameOverAlert() -> AlertState<GameAction> {
+        AlertState(
+            title: .init("Game Over!"),
+            message: .init("Your Score: \(score)!"),
+            dismissButton: .default(.init("New Game"), action: .send(.gameOverAlertDismissTapped))
+        )
+    }
+
+    func newGameAlert() -> AlertState<GameAction> {
+        AlertState(
+            title: .init("Are you sure you want to start a new game?"),
+            primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)),
+            secondaryButton: .cancel(.init("Cancel"))
+        )
+    }
+}
