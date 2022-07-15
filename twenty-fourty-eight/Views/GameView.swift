@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct GameView: View {
-    let store = Store(initialState: GameState(), reducer: gameReducer, environment: .live)
+    let store: Store<GameState, GameAction>
 
     struct ViewState: Equatable {
         var score: Int
@@ -25,7 +25,7 @@ struct GameView: View {
     }
 
     var body: some View {
-        WithViewStore(self.store.scope(state: ViewState.init, action: GameAction.init)) { _ in
+        WithViewStore(self.store.scope(state: ViewState.init, action: GameAction.init)) { viewStore in
             VStack(spacing: 16) {
                 HStack(spacing: 32) {
                     Spacer()
@@ -55,20 +55,23 @@ struct GameView: View {
                     .font(.system(.caption, design: .rounded))
 
                     Button("New Game") {
-                        print("new game!")
+                        viewStore.send(.newGameTapped)
                     }
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                     .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
                     .background(Color.buttonBackground(.secondary))
                     .foregroundColor(.textColor(.secondary))
                     .cornerRadius(4)
+                    .alert(
+                        self.store.scope(state: \.alert),
+                        dismiss: .newGameAlertCancelTapped
+                    )
                 }
                 BoardView(store: self.store.scope(state: \.board, action: GameAction.board))
                 Spacer()
             }
             .background(Color.neutral)
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: Button("Menu") {})
         }
     }
 }
@@ -87,7 +90,8 @@ extension GameAction {
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            GameView()
+            let store = Store(initialState: GameState(), reducer: gameReducer, environment: .live)
+            GameView(store: store)
         }
     }
 }
