@@ -34,6 +34,7 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 8, 128],
             ]
         }
+        store.receive(.tallyScore(4 + 8))
         store.receive(.addNewTile) {
             $0.newestTile = (1, 1)
         }
@@ -46,6 +47,7 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 16, 256],
             ]
         }
+        store.receive(.tallyScore(16 + 256))
         store.receive(.addNewTile)
         store.receive(.checkGameOver)
         store.send(.swipe(.left)) {
@@ -56,6 +58,7 @@ class BoardFlowTests: XCTestCase {
                 [4, 32, 256, 0],
             ]
         }
+        store.receive(.tallyScore(32))
         store.receive(.addNewTile)
         store.receive(.checkGameOver)
         store.send(.swipe(.up)) {
@@ -66,6 +69,18 @@ class BoardFlowTests: XCTestCase {
                 [0, 0, 0, 0],
             ]
         }
+        store.receive(.tallyScore(8))
+        store.receive(.addNewTile)
+        store.receive(.checkGameOver)
+        store.send(.swipe(.right)) {
+            $0.matrix = [
+                [0, 8, 32, 256],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ]
+        }
+        store.receive(.tallyScore(0))
         store.receive(.addNewTile)
         store.receive(.checkGameOver)
     }
@@ -80,14 +95,11 @@ class BoardFlowTests: XCTestCase {
                 [4, 16, 8, 128],
             ]
         }
+        store.receive(.tallyScore(4 + 8))
         store.receive(.addNewTile) {
             $0.newestTile = store.environment.randomEmptyTile($0.matrix)
         }
         store.receive(.checkGameOver)
-        store.send(.swipe(.right))
-
-        // by sending the action again, we confirm there was no effect emitting from the previous action
-        // TODO: is there an actual way of asserting this?
         store.send(.swipe(.right))
     }
 
@@ -103,6 +115,7 @@ class BoardFlowTests: XCTestCase {
                 [4, 2, 4, 2],
             ]
         }
+        store.receive(.tallyScore(0))
         store.receive(.addNewTile) {
             $0.matrix = [
                 [2, 4, 2, 4],

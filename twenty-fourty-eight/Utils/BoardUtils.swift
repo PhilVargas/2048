@@ -5,7 +5,14 @@
 //  Created by Phil Vargas on 7/13/22.
 //
 
-enum BoardUtils {
+class BoardUtils {
+    let matrix: BoardMatrix
+    var points = 0
+
+    init(_ matrix: BoardMatrix) {
+        self.matrix = matrix
+    }
+
     static func generateNewTileValue() -> Int {
         (Array(repeating: 2, count: 9) + [4]).randomElement()!
     }
@@ -14,7 +21,7 @@ enum BoardUtils {
         zeroCoordinates(matrix).randomElement()
     }
 
-    private static func zeroCoordinates(_ matrix: BoardMatrix) -> [TileCoordinate] {
+    internal static func zeroCoordinates(_ matrix: BoardMatrix) -> [TileCoordinate] {
         var coordinates: [TileCoordinate] = []
         for row in 0 ..< matrix.count {
             for col in 0 ..< matrix[row].count {
@@ -27,7 +34,7 @@ enum BoardUtils {
         return coordinates
     }
 
-    static func slide(_ row: BoardRow) -> BoardRow {
+    internal func slide(_ row: BoardRow) -> BoardRow {
         let nonzeroRow = row.filter { value in value > 0 }
         let zeroPad = Array(repeating: 0, count: 4 - nonzeroRow.count)
         return zeroPad + nonzeroRow
@@ -45,7 +52,7 @@ enum BoardUtils {
     //
     // We end the merge when the current index is the last element of
     // the row, it has nothing to merge with behind it.
-    static func merge(_ row: BoardRow, index: Int = 0) -> BoardRow {
+    internal func merge(_ row: BoardRow, index: Int = 0) -> BoardRow {
         let nextIndex = index + 1
         if nextIndex >= row.endIndex { return row }
 
@@ -55,12 +62,13 @@ enum BoardUtils {
         if first == second, first > 0 {
             newRow[index] = first + second
             newRow.remove(at: nextIndex)
+            points += first + second
         }
         return merge(newRow.reversed(), index: nextIndex)
     }
 
     // Rotate matrix clockwise by 90 degrees
-    static func rotateClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
+    internal func rotateClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
         let len = matrix.count
         var newBoard = matrix
 
@@ -81,31 +89,34 @@ enum BoardUtils {
     }
 
     // Rotate matrix clockwise by 180 degrees
-    static func flip(_ matrix: BoardMatrix) -> BoardMatrix {
+    internal func flip(_ matrix: BoardMatrix) -> BoardMatrix {
         rotateClockwise(rotateClockwise(matrix))
     }
 
     // Rotate matrix counter clockwise 90 degrees, or clockwise by 270 degrees
-    static func rotateCounterClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
+    internal func rotateCounterClockwise(_ matrix: BoardMatrix) -> BoardMatrix {
         rotateClockwise(rotateClockwise(rotateClockwise(matrix)))
     }
 
-    private static func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
+    internal func swipe(_ matrix: BoardMatrix) -> BoardMatrix {
         matrix.map(slide)
             .map { row in merge(row) }
             .map(slide)
     }
 
-    static func swipe(_ matrix: BoardMatrix, to direction: SwipeDirection) -> BoardMatrix {
+    func swipe(_ direction: SwipeDirection) -> BoardMatrix {
+        let matrix: BoardMatrix
         switch direction {
         case .right:
-            return swipe(matrix)
+            matrix = swipe(self.matrix)
         case .up:
-            return rotateCounterClockwise(swipe(rotateClockwise(matrix)))
+            matrix = rotateCounterClockwise(swipe(rotateClockwise(self.matrix)))
         case .left:
-            return flip(swipe(flip(matrix)))
+            matrix = flip(swipe(flip(self.matrix)))
         case .down:
-            return rotateClockwise(swipe(rotateCounterClockwise(matrix)))
+            matrix = rotateClockwise(swipe(rotateCounterClockwise(self.matrix)))
         }
+
+        return matrix
     }
 }

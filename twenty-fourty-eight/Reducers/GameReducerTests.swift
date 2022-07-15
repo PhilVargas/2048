@@ -60,4 +60,23 @@ class GameFlowTests: XCTestCase {
         }
         store.receive(.board(.checkGameOver))
     }
+
+    func testScoreFlow() {
+        let store = TestStore(initialState: GameState(board: BoardState(matrix: initialMatrix)), reducer: gameReducer, environment: .mock)
+        store.send(.board(.swipe(.right))) {
+            $0.board.matrix = [
+                [0, 0, 0, 4],
+                [0, 0, 8, 128],
+                [0, 0, 0, 0],
+                [4, 16, 8, 128],
+            ]
+        }
+        store.receive(.board(.tallyScore(4 + 8))) {
+            $0.score += 4 + 8
+        }
+        store.receive(.board(.addNewTile)) {
+            $0.board.newestTile = (1, 1)
+        }
+        store.receive(.board(.checkGameOver))
+    }
 }
