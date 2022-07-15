@@ -23,11 +23,7 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
         switch action {
         case .board(.checkGameOver):
             if GameUtils.isGameOver(state.board.matrix) {
-                state.gameOverAlert = AlertState(
-                    title: .init("Game Over!"),
-                    message: .init("Your Score: \(state.score)!"),
-                    dismissButton: .default(.init("New Game"))
-                )
+                state.alert = state.gameOverAlert()
             }
             return .none
         case .board:
@@ -35,15 +31,11 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
         case .menuButtonTapped:
             return .none
         case .newGameTapped:
-            state.newGameAlert = AlertState(
-                title: .init("Are you sure you want to start a new game?"),
-                primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)),
-                secondaryButton: .cancel(.init("Cancel"))
-            )
+            state.alert = state.newGameAlert()
 
             return .none
-        case .newGameAlertCancelTapped:
-            state.newGameAlert = nil
+        case .alertDismissTapped:
+            state.alert = nil
 
             return .none
         case .newGameAlertConfirmTapped, .gameOverAlertDismissTapped:

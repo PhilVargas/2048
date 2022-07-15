@@ -63,12 +63,7 @@ struct GameView: View {
                     .foregroundColor(.textColor(.secondary))
                     .cornerRadius(4)
                     .alert(
-                        self.store.scope(state: \.newGameAlert),
-                        dismiss: .newGameAlertCancelTapped
-                    )
-                    .alert(
-                        self.store.scope(state: \.gameOverAlert),
-                        dismiss: .gameOverAlertDismissTapped
+                        self.store.scope(state: \.alert), dismiss: .alertDismissTapped
                     )
                 }
                 BoardView(store: self.store.scope(state: \.board, action: GameAction.board))

@@ -27,16 +27,16 @@ class GameFlowTests: XCTestCase {
         let store = TestStore(initialState: GameState(board: BoardState(matrix: initialMatrix)), reducer: gameReducer, environment: .mock)
 
         store.send(.newGameTapped) {
-            $0.newGameAlert = AlertState(title: .init("Are you sure you want to start a new game?"), primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)), secondaryButton: .cancel(.init("Cancel")))
+            $0.alert = store.state.newGameAlert()
         }
-        store.send(.newGameAlertCancelTapped) {
-            $0.newGameAlert = nil
+        store.send(.alertDismissTapped) {
+            $0.alert = nil
         }
         store.send(.newGameTapped) {
-            $0.newGameAlert = AlertState(title: .init("Are you sure you want to start a new game?"), primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)), secondaryButton: .cancel(.init("Cancel")))
+            $0.alert = store.state.newGameAlert()
         }
         store.send(.newGameAlertConfirmTapped) {
-            $0.newGameAlert = nil
+            $0.alert = nil
             $0 = GameState()
         }
         store.receive(.board(.addNewTile)) {
@@ -49,10 +49,10 @@ class GameFlowTests: XCTestCase {
         let store = TestStore(initialState: GameState(board: BoardState(matrix: gameOverMatrix)), reducer: gameReducer, environment: .mock)
 
         store.send(.board(.checkGameOver)) {
-            $0.gameOverAlert = AlertState(title: .init("Game Over!"), message: .init("Your Score: \($0.score)!"), dismissButton: .default(.init("New Game")))
+            $0.alert = store.state.gameOverAlert()
         }
         store.send(.gameOverAlertDismissTapped) {
-            $0.gameOverAlert = nil
+            $0.alert = nil
             $0 = GameState()
         }
         store.receive(.board(.addNewTile)) {
