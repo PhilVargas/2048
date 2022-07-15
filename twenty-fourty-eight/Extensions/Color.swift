@@ -7,15 +7,40 @@
 
 import SwiftUI
 
+// MARK: UI Colors
+
 extension Color {
     static var boardBackground: Color {
         .init(red: 194 / 255, green: 178 / 255, blue: 154 / 255)
     }
 
-    static var buttonBackground: Color {
-        .init(red: 188 / 255, green: 172 / 255, blue: 159 / 255)
+    static var neutral: Color {
+        .init(red: 250 / 255, green: 248 / 255, blue: 239 / 255)
     }
 
+    enum ButtonColor {
+        case primary
+        case secondary
+    }
+
+    static func buttonBackground(_ bgColor: ButtonColor) -> Color {
+        switch bgColor {
+        case .primary: return .init(red: 188 / 255, green: 172 / 255, blue: 159 / 255)
+        case .secondary: return .init(red: 143 / 255, green: 122 / 255, blue: 101 / 255)
+        }
+    }
+
+    static func textColor(_ bgColor: ButtonColor) -> Color {
+        switch bgColor {
+        case .primary: return .init(red: 120 / 255, green: 111 / 255, blue: 102 / 255)
+        case .secondary: return .white
+        }
+    }
+}
+
+// MARK: Tile Colors
+
+extension Color {
     static var tileEmpty: Color {
         .init(red: 238 / 255, green: 228 / 255, blue: 218 / 255, opacity: 0.35)
     }

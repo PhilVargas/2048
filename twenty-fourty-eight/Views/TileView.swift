@@ -22,7 +22,7 @@ struct TileView: View {
         Text(title)
             .font(.system(size: style.fontSize, weight: .black, design: .rounded))
             .foregroundColor(.white)
-            .frame(width: 70, height: 70)
+            .frame(width: 80, height: 80)
             .background(style.backgroundColor)
             .cornerRadius(3)
     }

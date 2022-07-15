@@ -45,6 +45,9 @@ struct BoardView: View {
                     viewStore.send(.swipe(direction))
                 }
             )
+            .onAppear {
+                viewStore.send(.addNewTile)
+            }
         }
     }
 }
