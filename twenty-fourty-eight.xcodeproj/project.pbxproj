@@ -18,6 +18,11 @@
 		2D3228EE287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3228ED287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift */; };
 		2D3228FC287F13BA00C4DD7E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2D3228FB287F13BA00C4DD7E /* ComposableArchitecture */; };
 		2D3A02522880DAE8008EAE9D /* Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02512880DAE8008EAE9D /* Equatable.swift */; };
+		2D3A02542881C3FD008EAE9D /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02532881C3FD008EAE9D /* GameView.swift */; };
+		2D3A02562881DF62008EAE9D /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02552881DF62008EAE9D /* GameState.swift */; };
+		2D3A02582881DFC8008EAE9D /* GameActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02572881DFC8008EAE9D /* GameActions.swift */; };
+		2D3A025A2881E081008EAE9D /* GameReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02592881E081008EAE9D /* GameReducer.swift */; };
+		2D3A025E2881E1AF008EAE9D /* GameReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A025D2881E1AF008EAE9D /* GameReducerTests.swift */; };
 		2DE307B6287F1A5400BEB06B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B5287F1A5400BEB06B /* Color.swift */; };
 		2DE307B9287F1F3600BEB06B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B8287F1F3600BEB06B /* BoardView.swift */; };
 		2DE307BB287F21D800BEB06B /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307BA287F21D800BEB06B /* TileView.swift */; };
@@ -60,6 +65,11 @@
 		2D3228EB287E209400C4DD7E /* twenty_fourty_eightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twenty_fourty_eightUITests.swift; sourceTree = "<group>"; };
 		2D3228ED287E209400C4DD7E /* twenty_fourty_eightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twenty_fourty_eightUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2D3A02512880DAE8008EAE9D /* Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equatable.swift; sourceTree = "<group>"; };
+		2D3A02532881C3FD008EAE9D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		2D3A02552881DF62008EAE9D /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		2D3A02572881DFC8008EAE9D /* GameActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameActions.swift; sourceTree = "<group>"; };
+		2D3A02592881E081008EAE9D /* GameReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReducer.swift; sourceTree = "<group>"; };
+		2D3A025D2881E1AF008EAE9D /* GameReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReducerTests.swift; sourceTree = "<group>"; };
 		2DE307B5287F1A5400BEB06B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2DE307B8287F1F3600BEB06B /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		2DE307BA287F21D800BEB06B /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
@@ -100,10 +110,10 @@
 		2D3228BF287E209000C4DD7E = {
 			isa = PBXGroup;
 			children = (
+				2D3228C9287E209000C4DD7E /* Products */,
 				2D3228CA287E209000C4DD7E /* twenty-fourty-eight */,
 				2D3228E0287E209400C4DD7E /* twenty-fourty-eightTests */,
 				2D3228EA287E209400C4DD7E /* twenty-fourty-eightUITests */,
-				2D3228C9287E209000C4DD7E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -175,6 +185,7 @@
 			children = (
 				2DE307B8287F1F3600BEB06B /* BoardView.swift */,
 				2DE307BA287F21D800BEB06B /* TileView.swift */,
+				2D3A02532881C3FD008EAE9D /* GameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				2DE307BD287F2A2700BEB06B /* BoardState.swift */,
+				2D3A02552881DF62008EAE9D /* GameState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -191,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				2DE307C0287F2C8900BEB06B /* BoardActions.swift */,
+				2D3A02572881DFC8008EAE9D /* GameActions.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -200,6 +213,8 @@
 			children = (
 				2DE307C3287F2E1E00BEB06B /* BoardReducer.swift */,
 				2DE307CB287F7BCC00BEB06B /* BoardReducerTests.swift */,
+				2D3A02592881E081008EAE9D /* GameReducer.swift */,
+				2D3A025D2881E1AF008EAE9D /* GameReducerTests.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -371,17 +386,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3A025A2881E081008EAE9D /* GameReducer.swift in Sources */,
 				2D3228D5287E209400C4DD7E /* Persistence.swift in Sources */,
 				2DE307C7287F418B00BEB06B /* BoardUtils.swift in Sources */,
+				2D3A02582881DFC8008EAE9D /* GameActions.swift in Sources */,
 				2DE307C4287F2E1E00BEB06B /* BoardReducer.swift in Sources */,
 				2DE307C1287F2C8900BEB06B /* BoardActions.swift in Sources */,
 				2DE307BB287F21D800BEB06B /* TileView.swift in Sources */,
 				2D3228CE287E209000C4DD7E /* ContentView.swift in Sources */,
 				2D3A02522880DAE8008EAE9D /* Equatable.swift in Sources */,
+				2D3A02562881DF62008EAE9D /* GameState.swift in Sources */,
 				2D3228D8287E209400C4DD7E /* twenty_fourty_eight.xcdatamodeld in Sources */,
 				2DE307BE287F2A2700BEB06B /* BoardState.swift in Sources */,
 				2DE307B9287F1F3600BEB06B /* BoardView.swift in Sources */,
 				2DE307B6287F1A5400BEB06B /* Color.swift in Sources */,
+				2D3A02542881C3FD008EAE9D /* GameView.swift in Sources */,
 				2D3228CC287E209000C4DD7E /* twenty_fourty_eightApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,6 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3A025E2881E1AF008EAE9D /* GameReducerTests.swift in Sources */,
 				2DE307C9287F46ED00BEB06B /* BoardUtilsTests.swift in Sources */,
 				2D3228E2287E209400C4DD7E /* twenty_fourty_eightTests.swift in Sources */,
 				2DE307CC287F7BCC00BEB06B /* BoardReducerTests.swift in Sources */,

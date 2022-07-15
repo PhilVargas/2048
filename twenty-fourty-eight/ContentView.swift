@@ -16,26 +16,20 @@ struct ContentView: View {
     //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
     //        animation: .default)
     //    private var items: FetchedResults<Item>
-    let store = Store(initialState: BoardState(matrix: [
-        [0, 0, 0, 0],
-        [0, 0, 2, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-    ]), reducer: boardReducer, environment: .live)
 
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: BoardView(store: store)) {
+                NavigationLink(destination: GameView()) {
                     Text("New Game")
                         .font(.system(size: 16, weight: .black, design: .rounded))
                         .foregroundColor(.white)
                         .padding(12)
-                        .background(Color.buttonBackground)
+                        .background(Color.buttonBackground(.secondary))
                         .cornerRadius(6)
                 }
-            }.navigationTitle("2048")
-        }
+            }
+        }.font(.system(size: 16, weight: .black, design: .rounded))
     }
 }
 
