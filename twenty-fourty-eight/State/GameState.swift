@@ -7,15 +7,22 @@
 
 import ComposableArchitecture
 
+struct GameStack: Equatable {
+    let matrix: BoardMatrix
+    let score: Int
+}
+
 struct GameState: Equatable {
     var board: BoardState
     var score: Int
     var alert: AlertState<GameAction>?
+    var gameStack: [GameStack]
 
-    init(board: BoardState = BoardState(), score: Int = 0, alert: AlertState<GameAction>? = nil) {
+    init(board: BoardState = BoardState(), score: Int = 0, alert: AlertState<GameAction>? = nil, gameStack: [GameStack] = []) {
         self.board = board
         self.score = score
         self.alert = alert
+        self.gameStack = gameStack
     }
 }
 

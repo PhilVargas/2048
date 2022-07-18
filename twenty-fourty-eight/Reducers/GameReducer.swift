@@ -21,6 +21,12 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
     boardReducer.pullback(state: \.board, action: /GameAction.board, environment: \.board),
     .init { state, action, _ in
         switch action {
+        case let .board(.recordGameState(matrix)):
+            var stack = state.gameStack.count == 10 ? Array(state.gameStack.dropFirst()) : state.gameStack
+
+            stack.append(.init(matrix: matrix, score: state.score))
+            state.gameStack = stack
+            return .none
         case .board(.checkGameOver):
             if GameUtils.isGameOver(state.board.matrix) {
                 state.alert = state.gameOverAlert()
@@ -44,6 +50,14 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
         case .newGameAlertConfirmTapped, .gameOverAlertDismissTapped:
             state = GameState()
             return Just(GameAction.board(.addNewTile)).eraseToEffect()
+        case .undo:
+            if let previousSwipeState = state.gameStack.popLast() {
+                state.board.matrix = previousSwipeState.matrix
+                state.score = previousSwipeState.score
+                state.board.newestTile = nil
+            }
+
+            return .none
         }
     }
 )

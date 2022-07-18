@@ -13,68 +13,74 @@ struct GameView: View {
 
     struct ViewState: Equatable {
         var score: Int
+        var isUndoDisabled: Bool
 
         init(state: GameState) {
             score = state.score
+            isUndoDisabled = state.gameStack.count == .zero
         }
     }
 
     enum ViewAction {
         case menuButtonTapped
         case newGameTapped
+        case undo
     }
 
     var body: some View {
         WithViewStore(self.store.scope(state: ViewState.init, action: GameAction.init)) { viewStore in
             VStack(spacing: 16) {
-                HStack(spacing: 32) {
-                    Spacer()
+                HStack(spacing: 16) {
                     Text("2048")
-                        .font(.system(size: 64, weight: .bold, design: .rounded))
+                        .font(.system(size: 48, weight: .bold, design: .rounded))
                         .foregroundColor(.textColor(.primary))
+
                     VStack {
-                        Text("Score")
+                        VStack {
+                            Text("Score")
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .padding(.top, 4)
+
+                            Text("\(viewStore.score)")
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .scaledToFit()
+                                .minimumScaleFactor(0.5)
+                                .padding(.horizontal, 30)
+                                .padding(.bottom, 4)
+                        }
+                        .frame(width: 160, height: 55, alignment: .center)
+                        .fixedSize()
+                        .background(Color.buttonBackground(.primary))
+                        .cornerRadius(4)
+                        HStack {
+                            Button("Undo") {
+                                viewStore.send(.undo)
+                            }
                             .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .padding(.top, 4)
+                            .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
+                            .background(viewStore.isUndoDisabled ? Color.buttonBackground(.primary) : Color.buttonBackground(.secondary))
+                            .cornerRadius(4)
+                            .disabled(viewStore.isUndoDisabled)
 
-                        Text("\(viewStore.score)")
-                            .font(.system(size: 24, weight: .bold, design: .rounded))
-                            .scaledToFit()
-                            .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 30)
-                            .padding(.bottom, 4)
-                    }
-                    .frame(width: 150, height: 55, alignment: .center)
-                    .fixedSize()
-                    .background(Color.buttonBackground(.primary))
-                    .foregroundColor(.textColor(.secondary))
-                    .cornerRadius(4)
-
-                    Spacer()
+                            Button("New Game") {
+                                viewStore.send(.newGameTapped)
+                            }
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
+                            .background(Color.buttonBackground(.secondary))
+                            .cornerRadius(4)
+                        }.frame(minWidth: 160)
+                    }.foregroundColor(.textColor(.secondary))
                 }
-                HStack {
-                    HStack {
-                        Text("Join the numbers and get to the **2048** tile!")
-                    }
+                .frame(maxWidth: 360)
+
+                Text("Join the numbers and get to the **2048** tile!")
+                    .font(.system(size: 16, weight: .regular, design: .rounded))
                     .foregroundColor(.textColor(.primary))
-                    .font(.system(.caption, design: .rounded))
 
-                    Button("New Game") {
-                        viewStore.send(.newGameTapped)
-                    }
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
-                    .background(Color.buttonBackground(.secondary))
-                    .foregroundColor(.textColor(.secondary))
-                    .cornerRadius(4)
-                    .alert(
-                        self.store.scope(state: \.alert), dismiss: .alertDismissTapped
-                    )
-                }
                 BoardView(store: self.store.scope(state: \.board, action: GameAction.board))
                 Spacer()
             }
-            .background(Color.neutral)
             .navigationBarBackButtonHidden(true)
         }
     }
@@ -87,6 +93,8 @@ extension GameAction {
             self = .menuButtonTapped
         case .newGameTapped:
             self = .newGameTapped
+        case .undo:
+            self = .undo
         }
     }
 }

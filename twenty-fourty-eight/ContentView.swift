@@ -14,7 +14,10 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            GameView(store: store)
+            ZStack {
+                Color.neutral.ignoresSafeArea()
+                GameView(store: store)
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ enum BoardAction: Equatable {
     case addNewTile
     case checkGameOver
     case tallyScore(Int)
+    case recordGameState(BoardMatrix)
 }
 
 enum SwipeDirection {
