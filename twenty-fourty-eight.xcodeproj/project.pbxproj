@@ -25,6 +25,7 @@
 		2D3A025E2881E1AF008EAE9D /* GameReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A025D2881E1AF008EAE9D /* GameReducerTests.swift */; };
 		2D3A0260288206D4008EAE9D /* GameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A025F288206D4008EAE9D /* GameUtils.swift */; };
 		2D3A0262288206E6008EAE9D /* GameUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A0261288206E6008EAE9D /* GameUtilsTests.swift */; };
+		2D3A02662885EB67008EAE9D /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A02652885EB67008EAE9D /* AboutView.swift */; };
 		2DE307B6287F1A5400BEB06B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B5287F1A5400BEB06B /* Color.swift */; };
 		2DE307B9287F1F3600BEB06B /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307B8287F1F3600BEB06B /* BoardView.swift */; };
 		2DE307BB287F21D800BEB06B /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE307BA287F21D800BEB06B /* TileView.swift */; };
@@ -74,6 +75,7 @@
 		2D3A025D2881E1AF008EAE9D /* GameReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReducerTests.swift; sourceTree = "<group>"; };
 		2D3A025F288206D4008EAE9D /* GameUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUtils.swift; sourceTree = "<group>"; };
 		2D3A0261288206E6008EAE9D /* GameUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUtilsTests.swift; sourceTree = "<group>"; };
+		2D3A02652885EB67008EAE9D /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		2DE307B5287F1A5400BEB06B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2DE307B8287F1F3600BEB06B /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		2DE307BA287F21D800BEB06B /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		2DE307B7287F1F1D00BEB06B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2D3A02652885EB67008EAE9D /* AboutView.swift */,
 				2DE307B8287F1F3600BEB06B /* BoardView.swift */,
 				2D3A02532881C3FD008EAE9D /* GameView.swift */,
 				2DE307BA287F21D800BEB06B /* TileView.swift */,
@@ -396,6 +399,7 @@
 				2D3228D5287E209400C4DD7E /* Persistence.swift in Sources */,
 				2DE307C7287F418B00BEB06B /* BoardUtils.swift in Sources */,
 				2D3A02582881DFC8008EAE9D /* GameActions.swift in Sources */,
+				2D3A02662885EB67008EAE9D /* AboutView.swift in Sources */,
 				2DE307C4287F2E1E00BEB06B /* BoardReducer.swift in Sources */,
 				2DE307C1287F2C8900BEB06B /* BoardActions.swift in Sources */,
 				2DE307BB287F21D800BEB06B /* TileView.swift in Sources */,
@@ -584,7 +588,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eight";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -613,7 +617,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eight";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -632,7 +636,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eightTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -652,7 +656,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eightTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -670,7 +674,7 @@
 				DEVELOPMENT_TEAM = ZNMDFYHKYW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eightUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -688,7 +692,7 @@
 				DEVELOPMENT_TEAM = ZNMDFYHKYW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pav.twenty-fourty-eightUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pavapp.twenty-fourty-eight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
