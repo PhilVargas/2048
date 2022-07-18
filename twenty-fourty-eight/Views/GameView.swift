@@ -27,6 +27,8 @@ struct GameView: View {
         case undo
     }
 
+    @State var aboutMe = false
+
     var body: some View {
         WithViewStore(self.store.scope(state: ViewState.init, action: GameAction.init)) { viewStore in
             VStack(spacing: 16) {
@@ -79,7 +81,22 @@ struct GameView: View {
                     .foregroundColor(.textColor(.primary))
 
                 BoardView(store: self.store.scope(state: \.board, action: GameAction.board))
+
                 Spacer()
+
+                Button(action: {
+                    self.aboutMe = true
+                }, label: {
+                    Text("About Me").frame(maxWidth: UIScreen.main.bounds.width - 100)
+                })
+                .buttonStyle(.borderedProminent)
+                .tint(Color.buttonBackground(.secondary))
+                .buttonBorderShape(.capsule)
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(.textColor(.secondary))
+                .sheet(isPresented: $aboutMe) {
+                    AboutView()
+                }
             }
             .navigationBarBackButtonHidden(true)
         }
