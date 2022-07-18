@@ -28,11 +28,12 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
     switch action {
     case let .swipe(direction):
         let initialMatrix = state.matrix
-        state.matrix = BoardUtils.swipe(state.matrix, to: direction)
+        var boardUtils = BoardUtils(state.matrix)
+        state.matrix = boardUtils.swipe(direction)
         if state.matrix == initialMatrix {
             return .none
         }
-        return Just(.addNewTile).eraseToEffect()
+        return Just(.tallyScore(boardUtils.points)).eraseToEffect()
 
     case .addNewTile:
         if let emptyTileCoordinate = env.randomEmptyTile(state.matrix) {
@@ -41,6 +42,9 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
         }
 
         return Just(.checkGameOver).eraseToEffect()
+
+    case .tallyScore:
+        return Just(.addNewTile).eraseToEffect()
 
     case .checkGameOver:
         return .none

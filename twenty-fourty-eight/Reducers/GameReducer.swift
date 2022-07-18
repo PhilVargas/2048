@@ -26,6 +26,9 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
                 state.alert = state.gameOverAlert()
             }
             return .none
+        case let .board(.tallyScore(points)):
+            state.score += points
+            return .none
         case .board:
             return .none
         case .menuButtonTapped:

@@ -37,14 +37,19 @@ struct GameView: View {
                             .font(.system(size: 16, weight: .bold, design: .rounded))
                             .padding(.top, 4)
 
-                        Text("9001")
+                        Text("\(viewStore.score)")
                             .font(.system(size: 24, weight: .bold, design: .rounded))
+                            .scaledToFit()
+                            .minimumScaleFactor(0.5)
                             .padding(.horizontal, 30)
                             .padding(.bottom, 4)
                     }
+                    .frame(width: 150, height: 55, alignment: .center)
+                    .fixedSize()
                     .background(Color.buttonBackground(.primary))
                     .foregroundColor(.textColor(.secondary))
                     .cornerRadius(4)
+
                     Spacer()
                 }
                 HStack {
