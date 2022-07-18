@@ -13,4 +13,5 @@ enum GameAction: Equatable {
     case newGameAlertConfirmTapped
     case gameOverAlertDismissTapped
     case alertDismissTapped
+    case undo
 }
