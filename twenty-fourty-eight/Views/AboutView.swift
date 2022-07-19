@@ -35,7 +35,7 @@ struct AboutView: View {
                         }
 
                         HStack(spacing: 4) {
-                            Image("github-icon")
+                            Image("stack-overflow-icon")
                                 .resizable()
                                 .frame(maxWidth: 20, maxHeight: 20)
                             Text("[@PhilVarg](https://stackoverflow.com/users/3213605/philvarg)")
