@@ -18,7 +18,7 @@ struct ContentView: View {
                 Color.neutral.ignoresSafeArea()
                 GameView(store: store)
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
