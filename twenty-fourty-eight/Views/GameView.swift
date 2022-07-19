@@ -71,6 +71,9 @@ struct GameView: View {
                             .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 8))
                             .background(Color.buttonBackground(.secondary))
                             .cornerRadius(4)
+                            .alert(
+                                self.store.scope(state: \.alert), dismiss: .alertDismissTapped
+                            )
                         }.frame(minWidth: 160)
                     }.foregroundColor(.textColor(.secondary))
                 }
