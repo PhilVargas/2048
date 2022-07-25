@@ -16,6 +16,18 @@ class GameFlowTests: XCTestCase {
         [0, 0, 0, 0],
         [4, 16, 8, 128],
     ]
+    let preGameOverMatrix = [
+        [4, 2, 4, 0],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+    ]
+    let preGameOverSwipeMatrix = [
+        [0, 4, 2, 4],
+        [4, 2, 4, 2],
+        [2, 4, 2, 4],
+        [4, 2, 4, 2],
+    ]
     let gameOverMatrix = [
         [2, 4, 2, 4],
         [4, 2, 4, 2],
@@ -42,13 +54,29 @@ class GameFlowTests: XCTestCase {
         store.receive(.board(.addNewTile)) {
             $0.board.newestTile = (1, 1)
         }
-        store.receive(.board(.checkGameOver))
     }
 
     func testCheckGameOverFlow() {
-        let store = TestStore(initialState: GameState(board: BoardState(matrix: gameOverMatrix)), reducer: gameReducer, environment: .mock)
+        let store = TestStore(initialState: GameState(board: BoardState(matrix: preGameOverMatrix)), reducer: gameReducer, environment: .mock)
+        store.environment.board.randomEmptyTile = { _ in (0, 0) }
+        store.environment.board.generateNewTileValue = { 2 }
 
-        store.send(.board(.checkGameOver)) {
+        store.send(.board(.swipe(.right))) {
+            $0.board.matrix = self.preGameOverSwipeMatrix
+        }
+        store.receive(.board(.recordGameState(preGameOverMatrix))) {
+            $0.gameStack = [
+                .init(matrix: self.preGameOverMatrix, score: 0),
+            ]
+        }
+        store.receive(.board(.tallyScore(0)))
+        store.receive(.board(.addNewTile)) {
+            $0.board.newestTile = (0, 0)
+            $0.board.matrix = self.gameOverMatrix
+        }
+
+        store.send(.board(.swipe(.right)))
+        store.receive(.board(.checkGameOver)) {
             $0.alert = .gameOverAlert(with: $0.score)
         }
         store.send(.gameOverAlertDismissTapped) {
@@ -56,8 +84,22 @@ class GameFlowTests: XCTestCase {
             $0 = GameState()
         }
         store.receive(.board(.addNewTile)) {
-            $0.board.newestTile = (1, 1)
+            $0.board.newestTile = (0, 0)
+            $0.board.matrix = [
+                [2, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ]
         }
+    }
+
+    func testCheckGameOverWithoutLosingFlow() {
+        let store = TestStore(initialState: GameState(board: BoardState(matrix: preGameOverMatrix)), reducer: gameReducer, environment: .mock)
+        store.environment.board.randomEmptyTile = { _ in (0, 0) }
+        store.environment.board.generateNewTileValue = { 2 }
+
+        store.send(.board(.swipe(.left)))
         store.receive(.board(.checkGameOver))
     }
 
@@ -83,7 +125,6 @@ class GameFlowTests: XCTestCase {
         store.receive(.board(.addNewTile)) {
             $0.board.newestTile = (1, 1)
         }
-        store.receive(.board(.checkGameOver))
     }
 
     func testUndoFlow() {
@@ -108,7 +149,6 @@ class GameFlowTests: XCTestCase {
         store.receive(.board(.addNewTile)) {
             $0.board.newestTile = (1, 1)
         }
-        store.receive(.board(.checkGameOver))
 
         store.send(.undo) {
             $0.board.matrix = self.initialMatrix
@@ -166,7 +206,6 @@ class GameFlowTests: XCTestCase {
         store.receive(.board(.addNewTile)) {
             $0.board.newestTile = (1, 1)
         }
-        store.receive(.board(.checkGameOver))
 
         store.send(.board(.swipe(.right))) {
             $0.board.matrix = swipeRightMatrix
@@ -176,6 +215,5 @@ class GameFlowTests: XCTestCase {
         }
         store.receive(.board(.tallyScore(0)))
         store.receive(.board(.addNewTile))
-        store.receive(.board(.checkGameOver))
     }
 }

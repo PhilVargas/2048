@@ -66,34 +66,31 @@ class BoardFlowTests: XCTestCase {
         store.receive(.addNewTile) {
             $0.newestTile = (1, 1)
         }
-        store.receive(.checkGameOver)
         store.send(.swipe(.down)) {
             $0.matrix = self.swipeDownMatrix
         }
         store.receive(.recordGameState(swipeRightMatrix))
         store.receive(.tallyScore(16 + 256))
         store.receive(.addNewTile)
-        store.receive(.checkGameOver)
         store.send(.swipe(.left)) {
             $0.matrix = self.swipeLeftMatrix
         }
         store.receive(.recordGameState(swipeDownMatrix))
         store.receive(.tallyScore(32))
         store.receive(.addNewTile)
-        store.receive(.checkGameOver)
         store.send(.swipe(.up)) {
             $0.matrix = self.swipeUpMatrix
         }
         store.receive(.recordGameState(swipeLeftMatrix))
         store.receive(.tallyScore(8))
         store.receive(.addNewTile)
-        store.receive(.checkGameOver)
         store.send(.swipe(.right)) {
             $0.matrix = self.swipeFinalRightMatrix
         }
         store.receive(.recordGameState(swipeUpMatrix))
         store.receive(.tallyScore(0))
         store.receive(.addNewTile)
+        store.send(.swipe(.right))
         store.receive(.checkGameOver)
     }
 
@@ -107,11 +104,11 @@ class BoardFlowTests: XCTestCase {
         store.receive(.addNewTile) {
             $0.newestTile = (1, 1)
         }
-        store.receive(.checkGameOver)
         store.send(.swipe(.right))
+        store.receive(.checkGameOver)
     }
 
-    func testSwipeGameOverWhenNoNewTileIsAdded() {
+    func testSwipeIsGameOverFlow() {
         let store = TestStore(initialState: BoardState(matrix: gameOverMatrix), reducer: boardReducer, environment: .mock)
         store.environment.randomEmptyTile = { _ in (0, 0) }
         store.environment.generateNewTileValue = { 2 }
@@ -135,6 +132,7 @@ class BoardFlowTests: XCTestCase {
             ]
             $0.newestTile = (0, 0)
         }
+        store.send(.swipe(.right))
         store.receive(.checkGameOver)
     }
 }
