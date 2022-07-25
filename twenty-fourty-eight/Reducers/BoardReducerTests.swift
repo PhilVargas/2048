@@ -105,7 +105,7 @@ class BoardFlowTests: XCTestCase {
         store.receive(.recordGameState(initialMatrix))
         store.receive(.tallyScore(4 + 8))
         store.receive(.addNewTile) {
-            $0.newestTile = store.environment.randomEmptyTile($0.matrix)
+            $0.newestTile = (1, 1)
         }
         store.receive(.checkGameOver)
         store.send(.swipe(.right))

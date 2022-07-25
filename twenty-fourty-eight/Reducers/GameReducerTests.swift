@@ -27,13 +27,13 @@ class GameFlowTests: XCTestCase {
         let store = TestStore(initialState: GameState(board: BoardState(matrix: initialMatrix)), reducer: gameReducer, environment: .mock)
 
         store.send(.newGameTapped) {
-            $0.alert = store.state.newGameAlert()
+            $0.alert = .newGameAlert()
         }
         store.send(.alertDismissTapped) {
             $0.alert = nil
         }
         store.send(.newGameTapped) {
-            $0.alert = store.state.newGameAlert()
+            $0.alert = .newGameAlert()
         }
         store.send(.newGameAlertConfirmTapped) {
             $0.alert = nil
@@ -49,7 +49,7 @@ class GameFlowTests: XCTestCase {
         let store = TestStore(initialState: GameState(board: BoardState(matrix: gameOverMatrix)), reducer: gameReducer, environment: .mock)
 
         store.send(.board(.checkGameOver)) {
-            $0.alert = store.state.gameOverAlert()
+            $0.alert = .gameOverAlert(with: $0.score)
         }
         store.send(.gameOverAlertDismissTapped) {
             $0.alert = nil
