@@ -2,6 +2,8 @@
 
 Swift UI 2048 App
 
+<img src="https://raw.githubusercontent.com/PhilVargas/2048/main/Config/Screenshots/pav-2048-six-point-five-screenshot.png" width="250" />
+
 ## Setup
 
 - Install [SwiftLint](https://realm.github.io/SwiftLint/)
