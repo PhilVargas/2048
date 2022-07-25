@@ -112,7 +112,8 @@ class BoardFlowTests: XCTestCase {
     }
 
     func testSwipeGameOverWhenNoNewTileIsAdded() {
-        let store = TestStore(initialState: BoardState(matrix: gameOverMatrix), reducer: boardReducer, environment: .live)
+        let store = TestStore(initialState: BoardState(matrix: gameOverMatrix), reducer: boardReducer, environment: .mock)
+        store.environment.randomEmptyTile = { _ in (0, 0) }
         store.environment.generateNewTileValue = { 2 }
 
         store.send(.swipe(.right)) {
