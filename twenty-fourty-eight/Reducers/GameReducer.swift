@@ -29,7 +29,7 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
             return .none
         case .board(.checkGameOver):
             if GameUtils.isGameOver(state.board.matrix) {
-                state.alert = state.gameOverAlert()
+                state.alert = .gameOverAlert(with: state.score)
             }
             return .none
         case let .board(.tallyScore(points)):
@@ -40,7 +40,7 @@ let gameReducer = Reducer<GameState, GameAction, GameEnvironment>.combine(
         case .menuButtonTapped:
             return .none
         case .newGameTapped:
-            state.alert = state.newGameAlert()
+            state.alert = .newGameAlert()
 
             return .none
         case .alertDismissTapped:

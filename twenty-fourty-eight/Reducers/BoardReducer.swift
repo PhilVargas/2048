@@ -31,7 +31,7 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
         var boardUtils = BoardUtils(state.matrix)
         state.matrix = boardUtils.swipe(direction)
         if state.matrix == initialMatrix {
-            return .none
+            return Just(.checkGameOver).eraseToEffect()
         }
         return Just(.recordGameState(initialMatrix))
             .merge(with: Just(.tallyScore(boardUtils.points)))
@@ -43,7 +43,7 @@ let boardReducer = Reducer<BoardState, BoardAction, BoardEnvironment> { state, a
             state.newestTile = emptyTileCoordinate
         }
 
-        return Just(.checkGameOver).eraseToEffect()
+        return .none
 
     case .tallyScore:
         return Just(.addNewTile).eraseToEffect()

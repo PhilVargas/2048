@@ -26,8 +26,8 @@ struct GameState: Equatable {
     }
 }
 
-extension GameState {
-    func gameOverAlert() -> AlertState<GameAction> {
+extension AlertState where Action == GameAction {
+    static func gameOverAlert(with score: Int) -> AlertState<GameAction> {
         AlertState(
             title: .init("Game Over!"),
             message: .init("Your Score: \(score)!"),
@@ -35,7 +35,7 @@ extension GameState {
         )
     }
 
-    func newGameAlert() -> AlertState<GameAction> {
+    static func newGameAlert() -> AlertState<GameAction> {
         AlertState(
             title: .init("Are you sure you want to start a new game?"),
             primaryButton: .default(.init("Confirm"), action: .send(.newGameAlertConfirmTapped)),
